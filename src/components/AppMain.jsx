@@ -10,32 +10,39 @@ export default function AppMain({ array }) {
 
 
 
-    const [filmsFiltered, setfilmsFiltered] = useState([])
+    const [filmsFiltered, setfilmsFiltered] = useState(array)
     const [title, setTitle] = useState('')
     const [addNewTitle, setAddNewTitle] = useState('')
     const [addNewGenre, setAddNewGenre] = useState('')
 
-    const [addNewFilms, setAddNewFilms] = useState(filmsFiltered)
+    const [addNewFilms, setAddNewFilms] = useState(array)
+    //console.log(addNewFilms);
+    //console.log(filmsFiltered);
+
+
+    function addNewFilm(e) {
+        e.preventDefault()
+        const newObjectWithFilm = { title: addNewTitle, genre: addNewGenre }
+        //console.log(newObjectWithFilm);
+
+        //console.log(saveNewArray, newObjectWithFilm);
+        //console.log([saveNewArray, ...filmsFiltered]);
+
+        setAddNewFilms([newObjectWithFilm, ...addNewFilms])
+
+    }
 
 
 
 
     useEffect(() => {
 
-        const filteredFilms = array.filter(filterFilms => filterFilms.genre.includes(genre))
+        const filteredFilms = addNewFilms.filter(filterFilms => filterFilms.genre.includes(genre))
         const filteredByTitle = filteredFilms.filter((film) => film.title.includes(title))
         setfilmsFiltered(filteredByTitle)
 
-    }, [genre, title])
+    }, [genre, title, addNewFilms])
 
-
-    function addNewFilm(e) {
-        e.preventDefault()
-        const newObjectWithFilm = [{ title: addNewTitle, genre: addNewGenre }, ...filmsFiltered]
-        console.log(newObjectWithFilm);
-        setAddNewFilms(newObjectWithFilm)
-
-    }
 
 
 
@@ -69,7 +76,7 @@ export default function AppMain({ array }) {
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             <ul>
                 {
-                    addNewFilms.map((singleArray, index) => (
+                    filmsFiltered.map((singleArray, index) => (
 
                         <li key={index}>TITOLO: {singleArray.title} GENERE:{singleArray.genre}</li>
 
