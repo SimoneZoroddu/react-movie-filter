@@ -2,25 +2,35 @@ import { useEffect, useState } from "react"
 
 
 export default function AppMain({ array }) {
-    //console.log(array);
+
 
     const singleArrayGenre = array.map((singleArray) => singleArray.genre)
-    //console.log(singleArrayGenre);
     const settedGenre = [...new Set(singleArrayGenre)]
-    //console.log(settedGenre);
-
-
     const [genre, setGenre] = useState('')
-    //console.log(genre);
+
+
+
     const [filmsFiltered, setfilmsFiltered] = useState([])
 
     useEffect(() => {
+
         const filteredFilms = array.filter(filterFilms => filterFilms.genre.includes(genre))
-        //console.log(filteredFilms);
         setfilmsFiltered(filteredFilms)
 
     }, [genre])
 
+
+    const [title, setTitle] = useState('')
+    const singleArrayTitle = array.map((singleArray) => singleArray.title)
+
+
+    const [filterForTitle, setFilterForTitle] = useState([])
+
+    useEffect(() => {
+
+        const filteredByFilms = array.filter(filterFilms => filterFilms.title === title)
+        setFilterForTitle(filteredByFilms)
+    }, [title])
 
     return (
         <>
@@ -35,6 +45,26 @@ export default function AppMain({ array }) {
 
                 }
             </select >
+            <select name="Genre" id="genre" value={title} onChange={(e) => setTitle(e.target.value)}>
+                <option value="">Seleziona un titolo</option>
+                {
+                    singleArrayTitle.map((singleTitle, index) => (
+
+                        <option key={index} value={singleTitle} > {singleTitle}</option>
+
+                    ))
+
+                }
+            </select>
+            <ul>
+                {
+                    filterForTitle.map((singleArray, index) => (
+
+                        <li key={index}>{singleArray.genre}</li>
+
+                    ))
+                }
+            </ul>
             <ul>
                 {
                     filmsFiltered.map((singleArray, index) => (
@@ -42,7 +72,6 @@ export default function AppMain({ array }) {
                         <li key={index}>{singleArray.title}</li>
 
                     ))
-
                 }
             </ul>
         </>
