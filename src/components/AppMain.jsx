@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react"
 
 
-
-
 export default function AppMain({ array }) {
     //console.log(array);
 
@@ -12,50 +10,44 @@ export default function AppMain({ array }) {
     //console.log(settedGenre);
 
 
-    const [films, setFilms] = useState(settedGenre)
-
+    const [genre, setGenre] = useState('')
+    //console.log(genre);
+    const [filmsFiltered, setfilmsFiltered] = useState([])
 
     useEffect(() => {
+        const filteredFilms = array.filter(filterFilms => filterFilms.genre.includes(genre))
+        //console.log(filteredFilms);
+        setfilmsFiltered(filteredFilms)
 
-    }, [films])
+    }, [genre])
 
 
     return (
         <>
-            <select name="Films" id="films">
-
+            <select name="Films" id="films" value={genre} onChange={(e) => setGenre(e.target.value)}>
+                <option value="">Seleziona un genere</option>
                 {
-                    films.map((genre, index) => (
+                    settedGenre.map((singleGenre, index) => (
 
-                        <option value={genre} key={index} > {genre}</option>
-
+                        <option key={index} value={singleGenre} > {singleGenre}</option>
 
                     ))
 
                 }
-
             </select >
-
             <ul>
                 {
-                    array.map((singleArray, index) => (
+                    filmsFiltered.map((singleArray, index) => (
 
                         <li key={index}>{singleArray.title}</li>
 
                     ))
 
-
                 }
             </ul>
-
-
-
         </>
     )
 }
-
-
-
 
 
 
