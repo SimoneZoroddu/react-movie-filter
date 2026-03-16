@@ -12,26 +12,49 @@ export default function AppMain({ array }) {
 
     const [filmsFiltered, setfilmsFiltered] = useState([])
     const [title, setTitle] = useState('')
+    const [addNewTitle, setAddNewTitle] = useState('')
+    const [addNewGenre, setAddNewGenre] = useState('')
+
+    const [addNewFilms, setAddNewFilms] = useState(filmsFiltered)
+
+
+
 
     useEffect(() => {
 
         const filteredFilms = array.filter(filterFilms => filterFilms.genre.includes(genre))
-        const filteredByTitle = filteredFilms.filter((film)=> film.title.includes(title))
+        const filteredByTitle = filteredFilms.filter((film) => film.title.includes(title))
         setfilmsFiltered(filteredByTitle)
 
     }, [genre, title])
 
 
-    //console.log(title);
-    //console.log(filmsFiltered);
-    
-  /*   const arrayFilteredByName = filmsFiltered.filter((film)=> film.title.includes(title)) */
-    //console.log(prova);
-    
-    
+    function addNewFilm(e) {
+        e.preventDefault()
+        const newObjectWithFilm = [{ title: addNewTitle, genre: addNewGenre }, ...filmsFiltered]
+        console.log(newObjectWithFilm);
+        setAddNewFilms(newObjectWithFilm)
+
+    }
+
+
 
     return (
         <>
+            <form action="" onSubmit={addNewFilm}>
+                <input type="text" value={addNewTitle} onChange={(e) => setAddNewTitle(e.target.value)} />
+                <select name="" id="" value={addNewGenre} onChange={(e) => setAddNewGenre(e.target.value)}>
+                    <option value="">Seleziona un genere</option>
+                    {
+                        settedGenre.map((singleGenre, index) => (
+
+                            <option key={index} value={singleGenre} > {singleGenre}</option>
+
+                        ))
+                    }
+                </select>
+                <button>Add</button>
+            </form>
             <select name="Films" id="films" value={genre} onChange={(e) => setGenre(e.target.value)}>
                 <option value="">Seleziona un genere</option>
                 {
@@ -46,7 +69,7 @@ export default function AppMain({ array }) {
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             <ul>
                 {
-                    filmsFiltered.map((singleArray, index) => (
+                    addNewFilms.map((singleArray, index) => (
 
                         <li key={index}>TITOLO: {singleArray.title} GENERE:{singleArray.genre}</li>
 
@@ -83,6 +106,11 @@ export default function AppMain({ array }) {
 
 
 
+//console.log(title);
+//console.log(filmsFiltered);
+
+const arrayFilteredByName = filmsFiltered.filter((film)=> film.title.includes(title))
+//console.log(prova);
 
 
 
@@ -94,7 +122,7 @@ const singleArrayTitle = array.map((singleArray) => singleArray.title)
 const [filterForTitle, setFilterForTitle] = useState([])
 
 useEffect(() => {
-
+    
     const filteredByFilms = array.filter(filterFilms => filterFilms.title === title)
     setFilterForTitle(filteredByFilms)
 }, [title])
