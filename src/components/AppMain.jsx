@@ -11,20 +11,21 @@ export default function AppMain({ array }) {
 
 
     const [filmsFiltered, setfilmsFiltered] = useState([])
+    const [title, setTitle] = useState('')
 
     useEffect(() => {
 
         const filteredFilms = array.filter(filterFilms => filterFilms.genre.includes(genre))
-        setfilmsFiltered(filteredFilms)
+        const filteredByTitle = filteredFilms.filter((film)=> film.title.includes(title))
+        setfilmsFiltered(filteredByTitle)
 
-    }, [genre])
+    }, [genre, title])
 
 
-    const [title, setTitle] = useState('')
     //console.log(title);
     //console.log(filmsFiltered);
     
-    const arrayFilteredByName = filmsFiltered.filter((film)=> film.title.includes(title))
+  /*   const arrayFilteredByName = filmsFiltered.filter((film)=> film.title.includes(title)) */
     //console.log(prova);
     
     
@@ -45,7 +46,7 @@ export default function AppMain({ array }) {
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             <ul>
                 {
-                    arrayFilteredByName.map((singleArray, index) => (
+                    filmsFiltered.map((singleArray, index) => (
 
                         <li key={index}>TITOLO: {singleArray.title} GENERE:{singleArray.genre}</li>
 
