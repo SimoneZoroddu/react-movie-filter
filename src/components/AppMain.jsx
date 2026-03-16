@@ -33,8 +33,6 @@ export default function AppMain({ array }) {
     }
 
 
-
-
     useEffect(() => {
 
         const filteredFilms = addNewFilms.filter(filterFilms => filterFilms.genre.includes(genre))
@@ -48,41 +46,44 @@ export default function AppMain({ array }) {
 
     return (
         <>
-            <form action="" onSubmit={addNewFilm}>
-                <input type="text" value={addNewTitle} onChange={(e) => setAddNewTitle(e.target.value)} />
-                <select name="" id="" value={addNewGenre} onChange={(e) => setAddNewGenre(e.target.value)}>
-                    <option value="">Seleziona un genere</option>
+            <div className="container text-center">
+                <h1 className="text-primary p-2">Che Film ci sono oggi?</h1>
+                <form action="" onSubmit={addNewFilm} className="text-center">
+                    <input className="input-group-text my-3 mx-auto" placeholder="Scrivi il Nome del Film" type="text" value={addNewTitle} onChange={(e) => setAddNewTitle(e.target.value)} />
+                    <select className="form-select text-center" aria-label="Default select example" name="" id="" value={addNewGenre} onChange={(e) => setAddNewGenre(e.target.value)}>
+                        <option value="">Seleziona il suo genere</option>
+                        {
+                            settedGenre.map((singleGenre, index) => (
+
+                                <option key={index} value={singleGenre} > {singleGenre}</option>
+
+                            ))
+                        }
+                    </select>
+                    <button className="btn btn-primary my-3 text-black">Aggiungi alla lista il Nuovo Film</button>
+                </form>
+                <select className="form-select mb-3 text-center" aria-label="Default select example" name="Films" id="films" value={genre} onChange={(e) => setGenre(e.target.value)}>
+                    <option value="">Seleziona un genere da cercare</option>
                     {
                         settedGenre.map((singleGenre, index) => (
 
                             <option key={index} value={singleGenre} > {singleGenre}</option>
 
                         ))
+
                     }
-                </select>
-                <button>Add</button>
-            </form>
-            <select name="Films" id="films" value={genre} onChange={(e) => setGenre(e.target.value)}>
-                <option value="">Seleziona un genere</option>
-                {
-                    settedGenre.map((singleGenre, index) => (
+                </select >
+                <input className="input-group-text mb-3 mx-auto" type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <ul className="list-group">
+                    {
+                        filmsFiltered.map((singleArray, index) => (
 
-                        <option key={index} value={singleGenre} > {singleGenre}</option>
+                            <li className="list-group-item" key={index}><span className="text-success">Titolo Film</span> : {singleArray.title} <span className="text-warning">Genere del Film</span> : {singleArray.genre}</li>
 
-                    ))
-
-                }
-            </select >
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <ul>
-                {
-                    filmsFiltered.map((singleArray, index) => (
-
-                        <li key={index}>TITOLO: {singleArray.title} GENERE:{singleArray.genre}</li>
-
-                    ))
-                }
-            </ul>
+                        ))
+                    }
+                </ul>
+            </div>
         </>
     )
 }
