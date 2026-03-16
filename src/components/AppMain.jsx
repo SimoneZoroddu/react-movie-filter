@@ -21,16 +21,13 @@ export default function AppMain({ array }) {
 
 
     const [title, setTitle] = useState('')
-    const singleArrayTitle = array.map((singleArray) => singleArray.title)
-
-
-    const [filterForTitle, setFilterForTitle] = useState([])
-
-    useEffect(() => {
-
-        const filteredByFilms = array.filter(filterFilms => filterFilms.title === title)
-        setFilterForTitle(filteredByFilms)
-    }, [title])
+    //console.log(title);
+    //console.log(filmsFiltered);
+    
+    const arrayFilteredByName = filmsFiltered.filter((film)=> film.title.includes(title))
+    //console.log(prova);
+    
+    
 
     return (
         <>
@@ -45,31 +42,12 @@ export default function AppMain({ array }) {
 
                 }
             </select >
-            <select name="Genre" id="genre" value={title} onChange={(e) => setTitle(e.target.value)}>
-                <option value="">Seleziona un titolo</option>
-                {
-                    singleArrayTitle.map((singleTitle, index) => (
-
-                        <option key={index} value={singleTitle} > {singleTitle}</option>
-
-                    ))
-
-                }
-            </select>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
             <ul>
                 {
-                    filterForTitle.map((singleArray, index) => (
+                    arrayFilteredByName.map((singleArray, index) => (
 
-                        <li key={index}>{singleArray.genre}</li>
-
-                    ))
-                }
-            </ul>
-            <ul>
-                {
-                    filmsFiltered.map((singleArray, index) => (
-
-                        <li key={index}>{singleArray.title}</li>
+                        <li key={index}>TITOLO: {singleArray.title} GENERE:{singleArray.genre}</li>
 
                     ))
                 }
@@ -82,16 +60,78 @@ export default function AppMain({ array }) {
 
 
 
-/*<select name="cars" id="cars">
 
+
+
+
+
+/* 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const singleArrayTitle = array.map((singleArray) => singleArray.title)
+
+
+const [filterForTitle, setFilterForTitle] = useState([])
+
+useEffect(() => {
+
+    const filteredByFilms = array.filter(filterFilms => filterFilms.title === title)
+    setFilterForTitle(filteredByFilms)
+}, [title])
+<ul>
                 {
-                    array.map(({ title, genre }) => (
-                            
-                            <option value={title} key={title}>{title}</option>
-                    
+                    filterForTitle.map((singleArray, index) => (
+
+                        <li key={index}>{singleArray.genre}</li>
+
                     ))
-
                 }
+            </ul> 
 
-    </select>
-*/
+
+<select name="cars" id="cars">
+
+{
+    array.map(({ title, genre }) => (
+        
+        <option value={title} key={title}>{title}</option>
+        
+        ))
+        
+        }
+        
+        </select>
+    
+
+
+
+       <select name="Genre" id="genre" value={title} onChange={(e) => setTitle(e.target.value)}>
+           <option value="">Seleziona un titolo</option>
+           {
+               singleArrayTitle.map((singleTitle, index) => (
+       
+                   <option key={index} value={singleTitle} > {singleTitle}</option>
+       
+               ))
+       
+           
+       </select> */
